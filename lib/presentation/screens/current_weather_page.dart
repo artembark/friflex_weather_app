@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friflex_weather_app/domain/bloc/current_weather_cubit.dart';
+import 'package:friflex_weather_app/app/app_const.dart';
+import 'package:friflex_weather_app/domain/bloc/app_settings/app_settings_cubit.dart';
+import 'package:friflex_weather_app/domain/bloc/current_weather/current_weather_cubit.dart';
 
 class CurrentWeatherPage extends StatefulWidget {
   const CurrentWeatherPage({
@@ -12,11 +14,14 @@ class CurrentWeatherPage extends StatefulWidget {
 }
 
 class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
+  //объявление переменной для хранения названия города
   late String cityName;
 
   @override
   void didChangeDependencies() {
-    cityName = ModalRoute.of(context)?.settings.arguments.toString() ?? '';
+    //получение сохраненного значения названия города
+    cityName = context.read<AppSettingsCubit>().getCityName();
+    //
     context.read<CurrentWeatherCubit>().fetchCurrentWeather(cityName);
     super.didChangeDependencies();
   }
@@ -27,7 +32,7 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
       appBar: AppBar(
         leadingWidth: 80,
         leading: IconButton(
-          icon: Text('Выбрать другой', textAlign: TextAlign.center),
+          icon: const Text('Выбрать другой', textAlign: TextAlign.center),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -39,10 +44,10 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
         ),
         actions: [
           IconButton(
-            constraints: BoxConstraints.expand(width: 80),
-            icon: Text('Прогноз', textAlign: TextAlign.center),
+            constraints: const BoxConstraints.expand(width: 80),
+            icon: const Text('Прогноз', textAlign: TextAlign.center),
             onPressed: () {
-              Navigator.pushNamed(context, '/forecast');
+              Navigator.pushNamed(context, AppConst.forecastWeatherRoute);
             },
           )
         ],
@@ -50,22 +55,64 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
       body: BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
           builder: (context, state) {
         if (state.loading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: CircularProgressIndicator(
+            color: Colors.purple,
+          ));
         }
         if (state.errorMessage?.isNotEmpty == true) {
           return Text(state.errorMessage ?? 'Нет текста ошибки');
         }
         if (state.weatherEntity == null) {
-          return Text('Погода null');
+          return const Text('Ошибка получения данных');
         } else {
+          final String condition =
+              state.weatherEntity?.weather?.first.icon ?? '_unknown';
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Температура ${state.weatherEntity?.main?.temp}'),
-                Text('Влажность ${state.weatherEntity?.main?.humidity}'),
-                Text('Скорость ветра ${state.weatherEntity?.wind?.speed}'),
-              ],
+            child: FractionallySizedBox(
+              widthFactor: 0.8,
+              heightFactor: 0.6,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.purple),
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.purple),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20))),
+                              child: Image.asset(
+                                  'assets/conditions/cond$condition.png')),
+                          Text(
+                            state.weatherEntity?.weather?.first.description ??
+                                'неизвестно',
+                            style: const TextStyle(fontSize: 24.0),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        'Температура: ${state.weatherEntity?.main?.temp}°C',
+                        style: const TextStyle(fontSize: 24.0),
+                      ),
+                      Text(
+                        'Влажность: ${state.weatherEntity?.main?.humidity}%',
+                        style: const TextStyle(fontSize: 24.0),
+                      ),
+                      Text(
+                        'Скорость ветра: ${state.weatherEntity?.wind?.speed}м/с',
+                        style: const TextStyle(fontSize: 24.0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           );
         }

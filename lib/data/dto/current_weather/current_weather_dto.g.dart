@@ -38,15 +38,15 @@ _$_CurrentWeatherDTO _$$_CurrentWeatherDTOFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_CurrentWeatherDTOToJson(
         _$_CurrentWeatherDTO instance) =>
     <String, dynamic>{
-      'coord': instance.coord,
-      'weather': instance.weather,
+      'coord': instance.coord?.toJson(),
+      'weather': instance.weather?.map((e) => e.toJson()).toList(),
       'base': instance.base,
-      'main': instance.main,
+      'main': instance.main?.toJson(),
       'visibility': instance.visibility,
-      'wind': instance.wind,
-      'clouds': instance.clouds,
+      'wind': instance.wind?.toJson(),
+      'clouds': instance.clouds?.toJson(),
       'dt': instance.dt,
-      'sys': instance.sys,
+      'sys': instance.sys?.toJson(),
       'timezone': instance.timezone,
       'id': instance.id,
       'name': instance.name,

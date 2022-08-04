@@ -8,9 +8,9 @@ part of 'main_dto.dart';
 
 _$_MainDTO _$$_MainDTOFromJson(Map<String, dynamic> json) => _$_MainDTO(
       temp: json['temp'] as num?,
-      feelsLike: json['feelsLike'] as num?,
-      tempMin: json['tempMin'] as num?,
-      tempMax: json['tempMax'] as num?,
+      feelsLike: json['feels_like'] as num?,
+      tempMin: json['temp_min'] as num?,
+      tempMax: json['temp_max'] as num?,
       pressure: json['pressure'] as num?,
       humidity: json['humidity'] as num?,
     );
@@ -18,9 +18,9 @@ _$_MainDTO _$$_MainDTOFromJson(Map<String, dynamic> json) => _$_MainDTO(
 Map<String, dynamic> _$$_MainDTOToJson(_$_MainDTO instance) =>
     <String, dynamic>{
       'temp': instance.temp,
-      'feelsLike': instance.feelsLike,
-      'tempMin': instance.tempMin,
-      'tempMax': instance.tempMax,
+      'feels_like': instance.feelsLike,
+      'temp_min': instance.tempMin,
+      'temp_max': instance.tempMax,
       'pressure': instance.pressure,
       'humidity': instance.humidity,
     };

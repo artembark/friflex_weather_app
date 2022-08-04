@@ -4,8 +4,8 @@ class SysEntity extends Equatable {
   final num? type;
   final num? id;
   final String? country;
-  final num? sunrise;
-  final num? sunset;
+  final DateTime? sunrise;
+  final DateTime? sunset;
 
   const SysEntity({
     required this.type,

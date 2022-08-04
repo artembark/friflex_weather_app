@@ -24,8 +24,8 @@ extension SysMapper on SysDTO {
       type: type,
       id: id,
       country: country,
-      sunrise: sunrise,
-      sunset: sunset,
+      sunrise: DateTime.fromMillisecondsSinceEpoch(sunrise?.toInt() ?? 0),
+      sunset: DateTime.fromMillisecondsSinceEpoch(sunset?.toInt() ?? 0),
     );
   }
 }

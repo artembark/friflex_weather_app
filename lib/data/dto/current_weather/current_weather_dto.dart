@@ -44,7 +44,7 @@ extension CurrentWeatherMapper on CurrentWeatherDTO {
         visibility: visibility,
         wind: wind?.toEntity(),
         clouds: clouds?.toEntity(),
-        dt: dt,
+        dt: DateTime.fromMillisecondsSinceEpoch(dt?.toInt() ?? 0),
         sys: sys?.toEntity(),
         timezone: timezone,
         id: id,

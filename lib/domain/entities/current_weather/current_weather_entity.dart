@@ -15,7 +15,7 @@ class CurrentWeatherEntity extends Equatable {
   final num? visibility;
   final WindEntity? wind;
   final CloudsEntity? clouds;
-  final num? dt;
+  final DateTime? dt;
   final SysEntity? sys;
   final num? timezone;
   final num? id;
