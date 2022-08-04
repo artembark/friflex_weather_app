@@ -1,0 +1,12 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+
+analyzer:
+  exclude:
+    - '**/*.g.dart'
+  #strong-mode:
+    #implicit-casts: false
+    #implicit-dynamic: false
+
