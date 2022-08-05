@@ -1,7 +1,7 @@
 part of 'forecast_weather_cubit.dart';
 
 //состояние кубита прогноза погоды
-class ForecastWeatherState {
+class ForecastWeatherState extends Equatable {
   //поле для списка объектов прогноза погоды
   final List<ForecastPartEntity>? forecastPartList;
   //поле для состояния загрузки
@@ -10,9 +10,12 @@ class ForecastWeatherState {
   final String? errorMessage;
 
   //конструктор состояния, по умолчанию загрузка false
-  ForecastWeatherState({
+  const ForecastWeatherState({
     this.forecastPartList,
     this.loading = false,
     this.errorMessage,
   });
+
+  @override
+  List<Object?> get props => [forecastPartList, loading, errorMessage];
 }

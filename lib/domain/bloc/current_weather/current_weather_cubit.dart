@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:friflex_weather_app/app/app_exception.dart';
 import 'package:friflex_weather_app/domain/entities/current_weather/current_weather_entity.dart';
 import 'package:friflex_weather_app/domain/interfaces/current_weather_repo.dart';

@@ -1,8 +1,12 @@
 part of 'app_settings_cubit.dart';
 
 //состояния кубита для сохранения выбранного города в хранилище
-class AppSettingsState {
+//расширение от Equatable для возможности сравнивать состояния
+class AppSettingsState extends Equatable {
   final String? cityName;
 
-  AppSettingsState({this.cityName});
+  const AppSettingsState({this.cityName});
+
+  @override
+  List<Object?> get props => [cityName];
 }

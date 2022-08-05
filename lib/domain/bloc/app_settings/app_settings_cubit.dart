@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:friflex_weather_app/app/app_const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
