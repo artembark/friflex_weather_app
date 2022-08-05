@@ -91,7 +91,7 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Хочу узнать погоду в городе:',
+          'Узнать погоду в городе:',
           style: AppTextStyle.titleTextTextStyle,
         ),
         //отступ со всех сторон

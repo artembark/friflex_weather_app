@@ -1,0 +1,92 @@
+{
+  "cod": "200",
+  "message": 0,
+  "cnt": 2,
+  "list": [
+    {
+      "dt": 1659690000,
+      "main": {
+        "temp": 25.87,
+        "feels_like": 25.74,
+        "temp_min": 25.87,
+        "temp_max": 26.24,
+        "pressure": 1019,
+        "sea_level": 1019,
+        "grnd_level": 1019,
+        "humidity": 47,
+        "temp_kf": -0.37
+      },
+      "weather": [
+        {
+          "id": 800,
+          "main": "Clear",
+          "description": "ясно",
+          "icon": "01d"
+        }
+      ],
+      "clouds": {
+        "all": 3
+      },
+      "wind": {
+        "speed": 3.56,
+        "deg": 184,
+        "gust": 4.93
+      },
+      "visibility": 10000,
+      "pop": 0,
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2022-08-05 09:00:00"
+    },
+    {
+      "dt": 1659700800,
+      "main": {
+        "temp": 27.4,
+        "feels_like": 27.11,
+        "temp_min": 27.4,
+        "temp_max": 28.25,
+        "pressure": 1019,
+        "sea_level": 1019,
+        "grnd_level": 1017,
+        "humidity": 39,
+        "temp_kf": -0.85
+      },
+      "weather": [
+        {
+          "id": 801,
+          "main": "Clouds",
+          "description": "небольшая облачность",
+          "icon": "02d"
+        }
+      ],
+      "clouds": {
+        "all": 11
+      },
+      "wind": {
+        "speed": 4.04,
+        "deg": 188,
+        "gust": 5.76
+      },
+      "visibility": 10000,
+      "pop": 0,
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2022-08-05 12:00:00"
+    }
+  ],
+  "city": {
+    "id": 498817,
+    "name": "Санкт-Петербург",
+    "coord": {
+      "lat": 59.8944,
+      "lon": 30.2642
+    },
+    "country": "RU",
+    "population": 4953219,
+    "timezone": 10800,
+    "sunrise": 1659664160,
+    "sunset": 1659723634
+  }
+}

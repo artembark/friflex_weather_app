@@ -15,7 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   //инициализация биндингов
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   //инициализация зависимостей
   await initializeDependencies();
@@ -66,6 +66,7 @@ class FriflexWeatherApp extends StatelessWidget {
           BlocProvider(create: (_) => locator.get<AppSettingsCubit>()),
         ],
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: AppConst.appName,
           theme: ThemeData(
             primarySwatch: Colors.purple,

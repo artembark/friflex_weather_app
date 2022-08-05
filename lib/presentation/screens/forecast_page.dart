@@ -158,11 +158,11 @@ class ForecastCardItem extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                Text('Температура $temp °C'),
-                Text('Влажность $humidity %'),
-                Text('Скорость ветра $windSpeed м/с'),
+                Text('Температура: $temp °C'),
+                Text('Влажность: $humidity %'),
+                Text('Скорость ветра: $windSpeed м/с'),
                 Text(
-                  'Прогноз актуален на $forecastTime',
+                  'Прогноз актуален на: $forecastTime',
                   textAlign: TextAlign.center,
                 )
               ],
