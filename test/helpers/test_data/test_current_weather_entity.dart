@@ -27,7 +27,7 @@ final testCurrentWeatherEntity = CurrentWeatherEntity(
   clouds: const CloudsEntity(
     all: 0,
   ),
-  dt: DateTime.fromMillisecondsSinceEpoch(1659681983),
+  dt: DateTime.fromMillisecondsSinceEpoch(1659681983 * 1000),
   sys: SysEntity(
       type: 2,
       id: 197864,

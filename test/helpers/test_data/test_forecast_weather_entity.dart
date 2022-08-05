@@ -23,7 +23,7 @@ final testForecastWeatherEntity = ForecastWeatherEntity(
     list: [
       ForecastPartEntity(
           clouds: const CloudsEntity(all: 3),
-          dt: DateTime.fromMillisecondsSinceEpoch(1659690000),
+          dt: DateTime.fromMillisecondsSinceEpoch(1659690000 * 1000),
           dtTxt: '2022-08-05 09:00:00',
           main: const MainEntity(
               feelsLike: 25.74,
@@ -46,7 +46,7 @@ final testForecastWeatherEntity = ForecastWeatherEntity(
           wind: const WindEntity(speed: 3.56, deg: 184, gust: 4.93)),
       ForecastPartEntity(
           clouds: const CloudsEntity(all: 11),
-          dt: DateTime.fromMillisecondsSinceEpoch(1659700800),
+          dt: DateTime.fromMillisecondsSinceEpoch(1659700800 * 1000),
           dtTxt: '2022-08-05 12:00:00',
           main: const MainEntity(
               feelsLike: 27.11,
