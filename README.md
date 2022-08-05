@@ -23,8 +23,8 @@ flutter pub run build_runner build --delete-conflicting-outputs
 - для преобразования dto в entity используются мапперы посредством расширения функций. С помощью мапперов можно изменить тип данных при переходе от dto к entity   
 
 <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982645-30fef464-af55-48b3-b7d7-7d399ad8b30f.png"> <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982650-3cddeab6-404e-41f8-9925-c1355f5b0baf.png"> <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982739-adb5c18f-d4c6-456a-978b-7dd4a9ac2afb.png"> <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182983247-9c994d0e-3921-443f-9cd5-41e68c347bc0.png"> 
-<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982690-a705696f-e448-42fa-96af-06ebb9bc8fca.png"> 
-<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182983151-0b1c14c4-ecb7-45f7-a62d-879475fc4888.png"> 
-<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982673-5d02e5f9-1e1c-4392-b5df-c4448d00ca8e.png"> 
-
-
+<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085692-875e3930-b5b7-4296-a389-e966fd36a4b3.png"> 
+<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085612-967cce4f-c761-46f8-bfa6-3a6680ba962a.png"> 
+<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085537-162918ab-cd44-4f89-965c-454661b885bc.png"> 
+<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085478-7b14f2a8-cf84-473e-a579-5101aade23eb.png"> 
+<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085393-79b90de5-6a5e-4bba-9032-a2c7835ef35d.png"> 
