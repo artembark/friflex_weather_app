@@ -1,12 +1,12 @@
 # Weather App for Friflex
-Тестовое приложение для полуения текущей погоды и прогноза погоды на 3 дня.   
+Тестовое приложение для получения текущей погоды и прогноза погоды на 3 дня.   
 
 Код приложения покрыт юнит-тестами.
 
 В случае проблем после клонирования выполнить    
 flutter pub run build_runner build --delete-conflicting-outputs
 
-В приложении реализованы:
+## В приложении реализованы:
 - работа с двумя запросами API погоды: запрос текущей погоды, запрос прогноза погоды на 3 дня с интревалом 3 часа
 - отображение экрана текущей погоды с: иконкой соответствующего состояния погоды, текстового описания состояния погоды, температуры, влажности, скорости ветра
 - отображение экрана списка прогнозов погоды на 3 дня с интервалом 3 часа с сортировкой прогнозов погоды по температуре, начиная с самого холодного прогноза и отображающих иконку соответствующего состояния погоды, текстовое описания состояния погоды, температуру, влажность, сокрость ветра
@@ -20,11 +20,13 @@ flutter pub run build_runner build --delete-conflicting-outputs
 - для dto использована библиотека freezed, для кодогенерации классов - удобно так как сразу получаем и кодогенерацию для методов fromJson и также переопределяем 
 опрератор сравнения и хэшкода, что нужно при тестировании для сравнения объектов
 - классы entity имплементируют Equatable для возможности сравнивать объекты при написании тестов
-- для преобразования dto в entity используются мапперы посредством расширения функций. С помощью мапперов можно изменить тип данных при переходе от dto к entity   
+- для преобразования dto в entity используются мапперы посредством расширения функций. С помощью мапперов можно изменить тип данных при переходе от dto к entity    
+
+## Скриншоты экранов и возможных ошибок  
 
 <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982645-30fef464-af55-48b3-b7d7-7d399ad8b30f.png"> <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982650-3cddeab6-404e-41f8-9925-c1355f5b0baf.png"> <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182982739-adb5c18f-d4c6-456a-978b-7dd4a9ac2afb.png"> <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/182983247-9c994d0e-3921-443f-9cd5-41e68c347bc0.png"> 
-<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085692-875e3930-b5b7-4296-a389-e966fd36a4b3.png"> 
 <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085612-967cce4f-c761-46f8-bfa6-3a6680ba962a.png"> 
+<img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085692-875e3930-b5b7-4296-a389-e966fd36a4b3.png"> 
 <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085537-162918ab-cd44-4f89-965c-454661b885bc.png"> 
 <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085478-7b14f2a8-cf84-473e-a579-5101aade23eb.png"> 
 <img width="250" alt="menu" src="https://user-images.githubusercontent.com/30658712/183085393-79b90de5-6a5e-4bba-9032-a2c7835ef35d.png"> 
