@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 
+///наблюдатель для bloc
+///позволяет выводить все события жизненного цикла bloc в лог для отладки
 class AppBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {

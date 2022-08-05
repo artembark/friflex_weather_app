@@ -18,36 +18,42 @@ final GetIt locator = GetIt.instance;
 
 ///Конфигурирование зависимостей
 Future<void> initializeDependencies() async {
-  //Cubit
+  //Bloc/Cubit
+  //Кубит состояния текущей погоды
   locator.registerFactory(
     () => CurrentWeatherCubit(
       currentWeatherRepository: locator(),
     ),
   );
+  //Кубит состояния прогноза погоды
   locator.registerFactory(
     () => ForecastWeatherCubit(
       forecastWeatherRepository: locator(),
     ),
   );
+  //Блок состояния соединения
   locator.registerFactory(
     () => ConnectedBloc(
       connectivity: locator(),
     ),
   );
+  //Кубит настроек приложения
   locator.registerFactory(
     () => AppSettingsCubit(
       sharedPreferences: locator(),
     ),
   );
-  //Repository
+  //Репозитории
+  //Репозитоий текущей погоды
   locator.registerLazySingleton<CurrentWeatherRepository>(
     () => CurrentWeatherRepoImpl(weatherApiDataSource: locator()),
   );
+  //Репозиторий прогноза погоды
   locator.registerLazySingleton<ForecastWeatherRepository>(
     () => ForecastWeatherRepoImpl(weatherApiDataSource: locator()),
   );
-  //DataSource
-  // TODO:pass http
+  //Источники данных
+  //Источник данных погоды OpenWeatherMap
   locator.registerLazySingleton<WeatherApiDataSource>(
     () => OpenWeatherMapApiDataSource(client: locator()),
   );

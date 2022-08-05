@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friflex_weather_app/app/app_bloc_observer.dart';
 import 'package:friflex_weather_app/app/app_const.dart';
@@ -18,6 +19,9 @@ void main() async {
 
   //инициализация зависимостей
   await initializeDependencies();
+
+  //блокировка отображения в горизонтальном режиме
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   //инициализация хранилища shared preferences
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -41,6 +45,7 @@ void main() async {
               initialRoute: initialRoute,
             ),
           ),
+      //для логгирования событий bloc
       blocObserver: AppBlocObserver());
 }
 
@@ -53,6 +58,7 @@ class FriflexWeatherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+        //мультипровайдер для пробрасывания bloc и cubit по дереву
         providers: [
           BlocProvider(create: (_) => locator.get<CurrentWeatherCubit>()),
           BlocProvider(create: (_) => locator.get<ForecastWeatherCubit>()),
@@ -64,7 +70,9 @@ class FriflexWeatherApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.purple,
           ),
+          //установка initialRoute, полученного в начале
           initialRoute: initialRoute,
+          //именованные маршруты для навигации
           routes: {
             AppConst.initialRoute: (context) => const CityInputPage(),
             AppConst.currentWeatherRoute: (context) =>

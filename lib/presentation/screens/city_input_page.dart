@@ -5,6 +5,7 @@ import 'package:friflex_weather_app/app/app_text_styles.dart';
 import 'package:friflex_weather_app/domain/bloc/app_settings/app_settings_cubit.dart';
 import 'package:friflex_weather_app/domain/bloc/internet_connection/connected_bloc.dart';
 
+///Страница ввода названия города
 class CityInputPage extends StatelessWidget {
   const CityInputPage({
     Key? key,
@@ -14,29 +15,10 @@ class CityInputPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: const Text(AppConst.appName),
         ),
-        body: const CityInputView());
-  }
-}
-
-class CityInputView extends StatelessWidget {
-  const CityInputView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<ConnectedBloc, ConnectedState>(
-      listener: (context, state) {
-        if (state is ConnectedSuccessState) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text('Интернет-соединение восстановлено')));
-        } else if (state is ConnectedFailureState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Интернет-соединение потеряно')));
-        }
-      },
-      child: const CityInputTextField(),
-    );
+        body: const CityInputTextField());
   }
 }
 
@@ -83,8 +65,15 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
     if (cityNameController.text != '') {
       //сохранение введенного города
       context.read<AppSettingsCubit>().saveCity(cityNameController.text);
-      //переход на страницу с текущей погодой
-      Navigator.pushNamed(context, AppConst.currentWeatherRoute);
+      //проверка наличия интернет-соединения
+      if (context.read<ConnectedBloc>().state is ConnectedSuccessState) {
+        //переход на страницу с текущей погодой
+        Navigator.pushNamed(context, AppConst.currentWeatherRoute);
+      } else {
+        //демонстрация уведомления в случае отсутствия интернета
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Ошибка. Проверьте доступ к сети интернет.')));
+      }
     } else {
       //установка текста ошибки
       errorText = 'Необходимо ввести название города';
@@ -139,7 +128,7 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
         //кнопка для перехода на следующий экран
         OutlinedButton(
           onPressed: () => navigateToWeatherScreen(context),
-          child: const Text('Узнать!'),
+          child: const Text('Подтвердить'),
         )
       ],
     ));

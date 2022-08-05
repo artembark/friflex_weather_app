@@ -2,9 +2,14 @@
 abstract class AppConst {
   AppConst._();
 
-  static const String appName = 'FriFlex Weather App ';
+  //название приложения
+  static const String appName = 'FriFlex Weather App';
 
-  //request constants
+  //обычно ключ задаю через --dart-define и String.fromEnvironment,
+  //для простоты пусть останется тут
+  static const String apiKey = '1151ee38f9a7f66edb887800324960bf';
+
+  //константы http-запроса
   static const String weatherApiHost = 'api.openweathermap.org';
   static const String currentWeatherPath = '/data/2.5/weather';
   static const String forecastWeatherPath = '/data/2.5/forecast';
@@ -17,13 +22,11 @@ abstract class AppConst {
   static const String timestampsNumberKeyName = 'cnt';
   static const String timestampsNumberValue = '24';
 
-  //route constants
+  //константы маршруторв
   static const initialRoute = '/';
   static const currentWeatherRoute = '/current';
   static const forecastWeatherRoute = '/forecast';
 
-  //shared preferences key
+  //ключ для хранилища shared preferences
   static const sharedPrefCityKey = 'cityName';
-
-  static const String connectionErrorExceptionText = 'Connection Error';
 }
