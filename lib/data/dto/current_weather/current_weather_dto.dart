@@ -34,8 +34,15 @@ class CurrentWeatherDTO with _$CurrentWeatherDTO {
       _$CurrentWeatherDTOFromJson(json);
 }
 
+//маппер данных
+//преобразование форматов времени
 extension CurrentWeatherMapper on CurrentWeatherDTO {
   CurrentWeatherEntity toEntity() {
+    final time = dt?.toInt();
+    DateTime? convertedTime;
+    if (time != null) {
+      convertedTime = DateTime.fromMillisecondsSinceEpoch(time * 1000);
+    }
     return CurrentWeatherEntity(
         coord: coord?.toEntity(),
         weather: weather?.map((e) => e.toEntity()).toList(),
@@ -44,7 +51,7 @@ extension CurrentWeatherMapper on CurrentWeatherDTO {
         visibility: visibility,
         wind: wind?.toEntity(),
         clouds: clouds?.toEntity(),
-        dt: DateTime.fromMillisecondsSinceEpoch(dt?.toInt() ?? 0),
+        dt: convertedTime,
         sys: sys?.toEntity(),
         timezone: timezone,
         id: id,

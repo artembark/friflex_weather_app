@@ -30,11 +30,18 @@ class ForecastPartDTO with _$ForecastPartDTO {
       _$ForecastPartDTOFromJson(json);
 }
 
+//маппер данных
+//реализация преобразования даты
 extension ForecastPartMapper on ForecastPartDTO {
   ForecastPartEntity toEntity() {
+    final time = dt?.toInt();
+    DateTime? convertedTime;
+    if (time != null) {
+      convertedTime = DateTime.fromMillisecondsSinceEpoch(time * 1000);
+    }
     return ForecastPartEntity(
         clouds: clouds?.toEntity(),
-        dt: DateTime.fromMillisecondsSinceEpoch(dt?.toInt() ?? 0),
+        dt: convertedTime,
         dtTxt: dtTxt,
         main: main?.toEntity(),
         pop: pop,

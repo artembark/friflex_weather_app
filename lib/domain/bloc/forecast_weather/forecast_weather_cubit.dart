@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:friflex_weather_app/app/app_exception.dart';
 import 'package:friflex_weather_app/domain/entities/forecast_weather/forecast_part_entity.dart';

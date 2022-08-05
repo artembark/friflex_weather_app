@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friflex_weather_app/app/app_const.dart';
+import 'package:friflex_weather_app/app/app_strings.dart';
 import 'package:friflex_weather_app/app/app_text_styles.dart';
 import 'package:friflex_weather_app/domain/bloc/app_settings/app_settings_cubit.dart';
 import 'package:friflex_weather_app/domain/bloc/internet_connection/connected_bloc.dart';
@@ -34,6 +35,7 @@ class CityInputTextField extends StatefulWidget {
 class _CityInputTextFieldState extends State<CityInputTextField> {
   //контроллер для доступа к текстовому полю
   final TextEditingController cityNameController = TextEditingController();
+
   //текст ошибки поля для ввода
   String errorText = '';
 
@@ -51,9 +53,9 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
     if (value.length > 1) {
       errorText = '';
     } else if (value.length == 1) {
-      errorText = 'Слишком короткое название';
+      errorText = AppStrings.errorShortName;
     } else {
-      errorText = 'Необходимо ввести название города';
+      errorText = AppStrings.errorNoCityName;
     }
     //обновление состояния
     setState(() {});
@@ -72,11 +74,12 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
       } else {
         //демонстрация уведомления в случае отсутствия интернета
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Ошибка. Проверьте доступ к сети интернет.')));
+          content: Text(AppStrings.errorConnection),
+        ));
       }
     } else {
       //установка текста ошибки
-      errorText = 'Необходимо ввести название города';
+      errorText = AppStrings.errorNoCityName;
       //обновление состояния
       setState(() {});
     }
@@ -91,7 +94,7 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          'Узнать погоду в городе:',
+          AppStrings.labelGetWeather,
           style: AppTextStyle.titleTextTextStyle,
         ),
         //отступ со всех сторон
@@ -128,7 +131,7 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
         //кнопка для перехода на следующий экран
         OutlinedButton(
           onPressed: () => navigateToWeatherScreen(context),
-          child: const Text('Подтвердить'),
+          child: const Text(AppStrings.labelConfirmButton),
         )
       ],
     ));

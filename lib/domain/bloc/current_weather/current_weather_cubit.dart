@@ -26,15 +26,14 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
     //и формирование соответсвующего текста ошибки
     //если ошибка какая-то другая - текст ошибки устанавливается другим
     //оба случая вырасывают новое состояние с параметром текста ошибки
-    await currentWeatherRepository.getCurrentWeather(cityName: cityName).then(
-            (weatherEntity) =>
-                emit(CurrentWeatherState(weatherEntity: weatherEntity)))
-        //     .catchError((error) {
-        //   emit(CurrentWeatherState(errorMessage: 'Такой город не найден'));
-        // }, test: (error) => error is CityNotFoundException).catchError((error) {
-        //   print(error.toString());
-        //   emit(CurrentWeatherState(errorMessage: 'Ошибка получения данных'));
-        // })
-        ;
+    await currentWeatherRepository
+        .getCurrentWeather(cityName: cityName)
+        .then((weatherEntity) =>
+            emit(CurrentWeatherState(weatherEntity: weatherEntity)))
+        .catchError((error) {
+      emit(CurrentWeatherState(errorMessage: 'Такой город не найден'));
+    }, test: (error) => error is CityNotFoundException).catchError((error) {
+      emit(CurrentWeatherState(errorMessage: 'Ошибка получения данных'));
+    });
   }
 }

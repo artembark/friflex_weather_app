@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:friflex_weather_app/app/app_const.dart';
-import 'package:friflex_weather_app/app/app_text_styles.dart';
+import 'package:friflex_weather_app/app/app_strings.dart';
 import 'package:friflex_weather_app/domain/bloc/app_settings/app_settings_cubit.dart';
 import 'package:friflex_weather_app/domain/bloc/current_weather/current_weather_cubit.dart';
-import 'package:friflex_weather_app/domain/entities/current_weather/current_weather_entity.dart';
+import 'package:friflex_weather_app/presentation/widgets/current_weather_card.dart';
 import 'package:friflex_weather_app/presentation/widgets/error_page.dart';
+import 'package:friflex_weather_app/presentation/widgets/forecast_button.dart';
 import 'package:friflex_weather_app/presentation/widgets/weather_progress_indicator.dart';
 
 import '../../domain/bloc/internet_connection/connected_bloc.dart';
@@ -45,18 +45,19 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
         leadingWidth: 80,
         //кнопка возврата к экрану выбора названия города
         leading: IconButton(
-          icon: const Text('Выбрать другой', textAlign: TextAlign.center),
+          icon: const Text(AppStrings.labelChooseAnother,
+              textAlign: TextAlign.center),
           //вызов навигатора для выбрасывания текущего экрана из стека
           onPressed: () => Navigator.pop(context),
         ),
         //составной заголовок аппбара
         title: Column(
           children: [
-            const Text('Текущая погода'),
+            const Text(AppStrings.labelCurrentWeather),
             //для адаптации размера текста
             FittedBox(
               child: Text(
-                'Город $cityName',
+                '${AppStrings.labelForecastFull} $cityName',
               ),
             ),
           ],
@@ -98,9 +99,9 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
     if (context.read<ConnectedBloc>().state is ConnectedSuccessState) {
       //демонстрация уведомления о проблемах с получением данных
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(state.errorMessage ?? 'Неожиданная ошибка'),
+        content: Text(state.errorMessage ?? AppStrings.errorUnexpected),
         action: SnackBarAction(
-          label: 'Назад',
+          label: AppStrings.backButtonText,
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -108,115 +109,8 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
       ));
     } else {
       //демонстрация уведомления в случае отсутствия интернета
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Ошибка. Проверьте доступ к сети интернет.')));
-    }
-  }
-}
-
-//кнопка для открытия страницы с прогнозом
-class ForecastButton extends StatelessWidget {
-  const ForecastButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      constraints: const BoxConstraints.expand(width: 80),
-      icon: const Text('Прогноз', textAlign: TextAlign.center),
-      onPressed: () => navigateToForecast(context),
-    );
-  }
-
-  //проверка текущего соединения и демонстрауия уведомления
-  void navigateToForecast(BuildContext context) {
-    //проверка состояния интернет-соединения
-    if (context.read<ConnectedBloc>().state is ConnectedSuccessState) {
-      //переход на страницу с прогнозом погоды
-      Navigator.pushNamed(context, AppConst.forecastWeatherRoute);
-    } else {
-      //демонстрация уведомления в случае отсутствия интернета
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Ошибка. Проверьте доступ к сети интернет.',
-          ),
-        ),
-      );
+          const SnackBar(content: Text(AppStrings.errorConnection)));
     }
-  }
-}
-
-class CurrentWeatherCard extends StatelessWidget {
-  const CurrentWeatherCard({
-    Key? key,
-    required this.weather,
-  }) : super(key: key);
-
-  final CurrentWeatherEntity? weather;
-
-  @override
-  Widget build(BuildContext context) {
-    //переменная с кодом состояния погоды
-    final String condition = weather?.weather?.first.icon ?? '_unknown';
-    return Center(
-      //адаптивный к размерам экрана контейнер
-      child: FractionallySizedBox(
-        //процент по ширине
-        widthFactor: 0.8,
-        //процен по высоте
-        heightFactor: 0.6,
-        child: Container(
-          //добавление скруленной фиолетовой рамки
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.purple),
-              borderRadius: const BorderRadius.all(Radius.circular(20))),
-          child: Center(
-            child: Column(
-              //размещение объектов колонке с равным расстоянием между и половинрй
-              //расстояния сверху и снизу
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    //контейнер с закругленной рамкой и изображением
-                    Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.purple),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20))),
-                        //отображение картинки с состоянием погоды
-                        child: Image.asset(
-                            'assets/conditions/cond$condition.png')),
-                    //текстовое описание состояния погоды
-                    Text(
-                      weather?.weather?.first.description ?? 'неизвестно',
-                      style: AppTextStyle.parametersTextStyle,
-                    ),
-                  ],
-                ),
-                //отображение температуры
-                Text(
-                  'Температура: ${weather?.main?.temp} °C',
-                  style: AppTextStyle.parametersTextStyle,
-                ),
-                //отображение влажности
-                Text(
-                  'Влажность: ${weather?.main?.humidity} %',
-                  style: AppTextStyle.parametersTextStyle,
-                ),
-                //отображение скорости ветра
-                Text(
-                  'Скорость ветра: ${weather?.wind?.speed} м/с',
-                  style: AppTextStyle.parametersTextStyle,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

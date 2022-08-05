@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friflex_weather_app/app/app_bloc_observer.dart';
 import 'package:friflex_weather_app/app/app_const.dart';
+import 'package:friflex_weather_app/app/app_theme.dart';
 import 'package:friflex_weather_app/di.dart';
 import 'package:friflex_weather_app/domain/bloc/app_settings/app_settings_cubit.dart';
 import 'package:friflex_weather_app/domain/bloc/current_weather/current_weather_cubit.dart';
@@ -53,6 +54,7 @@ class FriflexWeatherApp extends StatelessWidget {
   const FriflexWeatherApp({Key? key, required this.initialRoute})
       : super(key: key);
 
+  //поле для передачи значения стартового маршрута
   final String initialRoute;
 
   @override
@@ -68,9 +70,7 @@ class FriflexWeatherApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: AppConst.appName,
-          theme: ThemeData(
-            primarySwatch: Colors.purple,
-          ),
+          theme: AppTheme.lightTheme,
           //установка initialRoute, полученного в начале
           initialRoute: initialRoute,
           //именованные маршруты для навигации
