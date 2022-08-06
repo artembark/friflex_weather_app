@@ -1,1 +1,43 @@
-{ "coord": { "lon": 30.2642, "lat": 59.8944 }, "weather": [ { "id": 800, "main": "Clear", "description": "ясно", "icon": "01d" } ], "base": "stations", "main": { "temp": 25.05, "feels_like": 24.99, "temp_min": 25.03, "temp_max": 25.62, "pressure": 1018, "humidity": 53 }, "visibility": 10000, "wind": { "speed": 2, "deg": 190 }, "clouds": { "all": 0 }, "dt": 1659681983, "sys": { "type": 2, "id": 197864, "country": "RU", "sunrise": 1659664160, "sunset": 1659723634 }, "timezone": 10800, "id": 498817, "name": "Санкт-Петербург", "cod": 200 }
+{
+  "coord": {
+    "lon": 30.2642,
+    "lat": 59.8944
+  },
+  "weather": [
+    {
+      "id": 800,
+      "main": "Clear",
+      "description": "ясно",
+      "icon": "01d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 25.05,
+    "feels_like": 24.99,
+    "temp_min": 25.03,
+    "temp_max": 25.62,
+    "pressure": 1018,
+    "humidity": 53
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 2,
+    "deg": 190
+  },
+  "clouds": {
+    "all": 0
+  },
+  "dt": 1659681983,
+  "sys": {
+    "type": 2,
+    "id": 197864,
+    "country": "RU",
+    "sunrise": 1659664160,
+    "sunset": 1659723634
+  },
+  "timezone": 10800,
+  "id": 498817,
+  "name": "Санкт-Петербург",
+  "cod": 200
+}

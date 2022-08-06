@@ -12,7 +12,8 @@ class ForecastWeatherRepoImpl implements ForecastWeatherRepository {
   ForecastWeatherRepoImpl({required this.weatherApiDataSource});
 
   @override
-  Future<ForecastWeatherEntity> getForecastWeather({required cityName}) async {
+  Future<ForecastWeatherEntity> getForecastWeather(
+      {required String cityName}) async {
     //запрос в источник данных с передачей параметра введенного города
     //и получением объекта текущей погоды уровня data
     final ForecastWeatherDTO forecastWeather =

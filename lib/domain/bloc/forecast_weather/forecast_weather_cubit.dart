@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:friflex_weather_app/app/app_exception.dart';
 import 'package:friflex_weather_app/domain/entities/forecast_weather/forecast_part_entity.dart';
 import 'package:friflex_weather_app/domain/interfaces/forecast_weather_repo.dart';
@@ -9,14 +10,15 @@ part 'forecast_weather_state.dart';
 class ForecastWeatherCubit extends Cubit<ForecastWeatherState> {
   //репозиторий предоставляющий объект прогноза погоды
   final ForecastWeatherRepository forecastWeatherRepository;
+
   //конструктор с обязательной передачей зависимостью
   //репозитория предоставляющего объект прогноза погоды
   ForecastWeatherCubit({required this.forecastWeatherRepository})
-      : super(ForecastWeatherState());
+      : super(const ForecastWeatherState());
 
   //функция получения объекта прогноза погоды
   Future<void> fetchForecastWeather(String cityName) async {
-    emit(ForecastWeatherState(loading: true));
+    emit(const ForecastWeatherState(loading: true));
     //получение данных от репозитория
     //в случае успеха - выбрасывание нового состояние с параметром,
     //сожержащим объект текущей погоды
@@ -34,10 +36,20 @@ class ForecastWeatherCubit extends Cubit<ForecastWeatherState> {
       forecastPartList?.sort();
       //эмитирование нового состояние со списком объектов погоды
       emit(ForecastWeatherState(forecastPartList: forecastPartList));
-    }).catchError((error) {
-      emit(ForecastWeatherState(errorMessage: 'Такой город не найден'));
-    }, test: (error) => error is CityNotFoundException).catchError((error) {
-      emit(ForecastWeatherState(errorMessage: 'Ошибка получения данных'));
+    })
+        //обработка ошибка неверно заданного города, определяется по
+        //типу кастомного исключения
+        .catchError((Object error) {
+      emit(const ForecastWeatherState(errorMessage: 'Такой город не найден'));
+    }, test: (error) => error is CityNotFoundException)
+        //обработка всех остальных ошибок и вывод типа ошибки и стектрейс
+        //для облегчения поиска проблемы во время отладки
+        .catchError((Object error, StackTrace stackTrace) {
+      if (kDebugMode) {
+        print(error.toString());
+        print(stackTrace);
+      }
+      emit(const ForecastWeatherState(errorMessage: 'Ошибка получения данных'));
     });
   }
 }

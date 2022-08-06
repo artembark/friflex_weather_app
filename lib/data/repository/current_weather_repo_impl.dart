@@ -14,7 +14,8 @@ class CurrentWeatherRepoImpl implements CurrentWeatherRepository {
   //переоперделение метода абстрактоного класса репозитория для
   //получения объекта с данными о текущей погоде уровня domain
   @override
-  Future<CurrentWeatherEntity> getCurrentWeather({required cityName}) async {
+  Future<CurrentWeatherEntity> getCurrentWeather(
+      {required String cityName}) async {
     //запрос в источник данных с передачей параметра введенного города
     //и получением объекта текущей погоды уровня data
     final CurrentWeatherDTO currentWeather = await weatherApiDataSource

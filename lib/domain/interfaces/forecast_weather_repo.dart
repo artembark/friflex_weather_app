@@ -5,5 +5,5 @@ abstract class ForecastWeatherRepository {
   ForecastWeatherRepository._();
 
   ///необходимо переопределить этот метод для получения объекта с прогнозом погоды
-  Future<ForecastWeatherEntity> getForecastWeather({required cityName});
+  Future<ForecastWeatherEntity> getForecastWeather({required String cityName});
 }

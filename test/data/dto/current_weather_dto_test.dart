@@ -22,7 +22,7 @@ void main() {
         final Map<String, dynamic> jsonMap = json.decode(
           File('test/helpers/test_data/test_current_weather_response.json')
               .readAsStringSync(),
-        );
+        ) as Map<String, dynamic>;
         final result = CurrentWeatherDTO.fromJson(jsonMap);
         expect(result, equals(testCurrentWeatherDTO));
       },

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:equatable/equatable.dart';
 
 part 'connected_event.dart';
 

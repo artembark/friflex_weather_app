@@ -5,5 +5,5 @@ abstract class CurrentWeatherRepository {
   CurrentWeatherRepository._();
 
   ///необходимо переопределить этот метод для получения объекта с текущей погодой
-  Future<CurrentWeatherEntity> getCurrentWeather({required cityName});
+  Future<CurrentWeatherEntity> getCurrentWeather({required String cityName});
 }

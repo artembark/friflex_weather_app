@@ -12,14 +12,17 @@ class AppSettingsCubit extends Cubit<AppSettingsState> {
 
   //конструктор с обязательным именованым параметром объекта доступа к хранилищу
   AppSettingsCubit({required this.sharedPreferences})
-      : super(AppSettingsState());
+      : super(const AppSettingsState());
 
   //функция сохранения текущего выбранного города в хранилище
   Future<void> saveCity(String cityName) async {
-    //запись названия города по ключу в хранилище, асинхронная
-    await sharedPreferences.setString(AppConst.sharedPrefCityKey, cityName);
-    //выбрасывание обновленного состояние с новым название города
-    emit(AppSettingsState(cityName: cityName));
+    //записываем в случае смены названия
+    if (cityName != state.cityName) {
+      //запись названия города по ключу в хранилище, асинхронная
+      await sharedPreferences.setString(AppConst.sharedPrefCityKey, cityName);
+      //выбрасывание обновленного состояние с новым название города
+      emit(AppSettingsState(cityName: cityName));
+    }
   }
 
   //функция получения сохраненного города из хранилища
