@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friflex_weather_app/app/app_const.dart';
@@ -68,7 +69,8 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
       //сохранение введенного города
       context.read<AppSettingsCubit>().saveCity(cityNameController.text);
       //проверка наличия интернет-соединения
-      if (context.read<ConnectedBloc>().state is ConnectedSuccessState) {
+      if (context.read<ConnectedBloc>().state is ConnectedSuccessState ||
+          kIsWeb) {
         //переход на страницу с текущей погодой
         Navigator.pushNamed(context, AppConst.currentWeatherRoute);
       } else {

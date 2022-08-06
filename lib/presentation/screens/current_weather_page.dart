@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:friflex_weather_app/app/app_strings.dart';
@@ -96,7 +97,8 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
 
   //показ уведомлений о соединении и ошибке соединения
   void showSnackBar(BuildContext context, CurrentWeatherState state) {
-    if (context.read<ConnectedBloc>().state is ConnectedSuccessState) {
+    if (context.read<ConnectedBloc>().state is ConnectedSuccessState ||
+        kIsWeb) {
       //демонстрация уведомления о проблемах с получением данных
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(state.errorMessage ?? AppStrings.errorUnexpected),
