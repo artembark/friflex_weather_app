@@ -1,12 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:friflex_weather_app/data/datasources/remote/openweathermap_api_data_source.dart';
 import 'package:friflex_weather_app/data/datasources/remote/weather_api_data_source.dart';
+import 'package:friflex_weather_app/data/repository/connected_repo_impl.dart';
 import 'package:friflex_weather_app/data/repository/current_weather_repo_impl.dart';
 import 'package:friflex_weather_app/data/repository/forecast_weather_repo_impl.dart';
 import 'package:friflex_weather_app/domain/bloc/app_settings/app_settings_cubit.dart';
 import 'package:friflex_weather_app/domain/bloc/current_weather/current_weather_cubit.dart';
 import 'package:friflex_weather_app/domain/bloc/forecast_weather/forecast_weather_cubit.dart';
 import 'package:friflex_weather_app/domain/bloc/internet_connection/connected_bloc.dart';
+import 'package:friflex_weather_app/domain/interfaces/connected_repo.dart';
 import 'package:friflex_weather_app/domain/interfaces/current_weather_repo.dart';
 import 'package:friflex_weather_app/domain/interfaces/forecast_weather_repo.dart';
 import 'package:get_it/get_it.dart';
@@ -34,7 +36,7 @@ Future<void> initializeDependencies() async {
   //Блок состояния соединения
   locator.registerFactory(
     () => ConnectedBloc(
-      connectivity: locator(),
+      connectedRepository: locator(),
     ),
   );
   //Кубит настроек приложения
@@ -52,6 +54,11 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<ForecastWeatherRepository>(
     () => ForecastWeatherRepoImpl(weatherApiDataSource: locator()),
   );
+  //Репозиторий двнных о подсоединеии
+  locator.registerLazySingleton<ConnectedRepository>(
+    () => ConnectedRepoImpl(connectivity: locator()),
+  );
+
   //Источники данных
   //Источник данных погоды OpenWeatherMap
   locator.registerLazySingleton<WeatherApiDataSource>(

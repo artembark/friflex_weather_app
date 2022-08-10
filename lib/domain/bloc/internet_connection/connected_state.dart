@@ -1,7 +1,10 @@
 part of 'connected_bloc.dart';
 
 //состояния bloc
-abstract class ConnectedState {}
+abstract class ConnectedState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 //начадьное состояние
 class ConnectedInitialState extends ConnectedState {}
