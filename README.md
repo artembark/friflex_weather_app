@@ -1,4 +1,6 @@
 # Weather App for Friflex
+**NOTE!** Версия, реализованная к моменту отправки на hr@friflex.com в ветке [master](https://github.com/artembark/friflex_weather_app/tree/master), дополнительный рефакторинг, продолжение тестов в ветке [develop](https://github.com/artembark/friflex_weather_app/tree/develop).
+
 Тестовое приложение для получения текущей погоды и прогноза погоды на 3 дня.   
 
 Код приложения покрыт комментариями и юнит-тестами.
