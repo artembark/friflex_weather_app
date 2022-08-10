@@ -24,38 +24,17 @@ void main() async {
   //блокировка отображения в горизонтальном режиме
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  //инициализация хранилища shared preferences
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  // считывание сохраненного города из хранилища
-  String cityName = prefs.getString(AppConst.sharedPrefCityKey) ?? '';
-
-  //переменная для хранения начального маршрута
-  String initialRoute;
-
-  // алгоритм выбора стартовой страницы
-  if (cityName == '') {
-    initialRoute = AppConst.initialRoute;
-  } else {
-    initialRoute = AppConst.currentWeatherRoute;
-  }
   //запуск приложения и передача стартовой страницы параметорм
   BlocOverrides.runZoned(
       () => runApp(
-            FriflexWeatherApp(
-              initialRoute: initialRoute,
-            ),
+            FriflexWeatherApp(),
           ),
       //для логгирования событий bloc
       blocObserver: AppBlocObserver());
 }
 
 class FriflexWeatherApp extends StatelessWidget {
-  const FriflexWeatherApp({Key? key, required this.initialRoute})
-      : super(key: key);
-
-  //поле для передачи значения стартового маршрута
-  final String initialRoute;
+  const FriflexWeatherApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,20 +44,27 @@ class FriflexWeatherApp extends StatelessWidget {
           BlocProvider(create: (_) => locator.get<CurrentWeatherCubit>()),
           BlocProvider(create: (_) => locator.get<ForecastWeatherCubit>()),
           BlocProvider(create: (_) => locator.get<ConnectedBloc>()),
-          BlocProvider(create: (_) => locator.get<AppSettingsCubit>()),
+          BlocProvider(
+              create: (_) => locator.get<AppSettingsCubit>()..getCityName()),
         ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: AppConst.appName,
-          theme: AppTheme.lightTheme,
-          //установка initialRoute, полученного в начале
-          initialRoute: initialRoute,
-          //именованные маршруты для навигации
-          routes: {
-            AppConst.initialRoute: (context) => const CityInputPage(),
-            AppConst.currentWeatherRoute: (context) =>
-                const CurrentWeatherPage(),
-            AppConst.forecastWeatherRoute: (context) => const ForecastPage()
+        child: BlocBuilder<AppSettingsCubit, AppSettingsState>(
+          builder: (context, state) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: AppConst.appName,
+              theme: AppTheme.lightTheme,
+              //установка initialRoute, полученного в начале
+              initialRoute: (state.cityName == '')
+                  ? AppConst.initialRoute
+                  : AppConst.currentWeatherRoute,
+              //именованные маршруты для навигации
+              routes: {
+                AppConst.initialRoute: (context) => const CityInputPage(),
+                AppConst.currentWeatherRoute: (context) =>
+                    const CurrentWeatherPage(),
+                AppConst.forecastWeatherRoute: (context) => const ForecastPage()
+              },
+            );
           },
         ));
   }
