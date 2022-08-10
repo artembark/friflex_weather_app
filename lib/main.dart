@@ -12,7 +12,6 @@ import 'package:friflex_weather_app/domain/bloc/internet_connection/connected_bl
 import 'package:friflex_weather_app/presentation/screens/city_input_page.dart';
 import 'package:friflex_weather_app/presentation/screens/current_weather_page.dart';
 import 'package:friflex_weather_app/presentation/screens/forecast_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   //инициализация биндингов
@@ -27,7 +26,7 @@ void main() async {
   //запуск приложения и передача стартовой страницы параметорм
   BlocOverrides.runZoned(
       () => runApp(
-            FriflexWeatherApp(),
+            const FriflexWeatherApp(),
           ),
       //для логгирования событий bloc
       blocObserver: AppBlocObserver());
@@ -43,7 +42,10 @@ class FriflexWeatherApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (_) => locator.get<CurrentWeatherCubit>()),
           BlocProvider(create: (_) => locator.get<ForecastWeatherCubit>()),
-          BlocProvider(create: (_) => locator.get<ConnectedBloc>()),
+          BlocProvider(
+              lazy: false,
+              create: (_) =>
+                  locator.get<ConnectedBloc>()..add(InitConnectionEvent())),
           BlocProvider(
               create: (_) => locator.get<AppSettingsCubit>()..getCityName()),
         ],
@@ -53,7 +55,7 @@ class FriflexWeatherApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: AppConst.appName,
               theme: AppTheme.lightTheme,
-              //установка initialRoute, полученного в начале
+              //установка initialRoute, полученного из AppSettingsCubit
               initialRoute: (state.cityName == '')
                   ? AppConst.initialRoute
                   : AppConst.currentWeatherRoute,

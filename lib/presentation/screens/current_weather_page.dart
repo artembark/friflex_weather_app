@@ -28,9 +28,6 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
   //на этом моменте уже есть доступ к контексту
   @override
   void didChangeDependencies() {
-    //получение доступа к bloc получения информации о соединении и
-    //добавление события инициализации
-    context.read<ConnectedBloc>().add(InitConnectionEvent());
     //получение названия города из кубита настроек приложения
     cityName = context.read<AppSettingsCubit>().getCityName();
     //вызов функции кубита текущей погодв для получения объекта текущей погоды
@@ -58,7 +55,7 @@ class _CurrentWeatherPageState extends State<CurrentWeatherPage> {
             //для адаптации размера текста
             FittedBox(
               child: Text(
-                '${AppStrings.labelForecastFull} $cityName',
+                '${AppStrings.labelCity} $cityName',
               ),
             ),
           ],

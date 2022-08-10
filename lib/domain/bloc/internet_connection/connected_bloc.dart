@@ -29,20 +29,25 @@ class ConnectedBloc extends Bloc<ConnectedEvent, ConnectedState> {
     });
     //событие иницализации
     on<InitConnectionEvent>((event, emit) async {
-      // проверка текущего состояния подключения устройства
-      checkConnectivityResult(await connectedRepository.isConnected());
+      //эмит состояния инициализации
+      emit(ConnectedInitialState());
+      //подписка на события изменения состояния подключения устройства
+      subscribeToStream();
     });
-    //подписка на события изменения состояния подключения устройства
-    subscription = connectedRepository
+  }
+
+  //метод для подписки на стрим событиями о состоянии подключения
+  StreamSubscription<bool> subscribeToStream() {
+    return subscription = connectedRepository
         .getConnectedStream()
         .listen(checkConnectivityResult);
   }
 
-  //функция проверки результата для определения появилось соединение или нет
+  //метод проверки результата для определения появилось соединение или нет
   //и добавления соответствующего события
   void checkConnectivityResult(bool connected) {
     if (connected) {
-      //если подключился Wi-Fi или мобильный интернет - состояние подсоединения
+      //если подключился интернет - состояние подсоединения
       add(OnConnectedEvent());
     } else {
       //все остальные события - состояние отсутствия соединения
@@ -54,7 +59,9 @@ class ConnectedBloc extends Bloc<ConnectedEvent, ConnectedState> {
   //закрытия блока и в нем же отменять полписку на стрим с событиями о подсоединении
   @override
   Future<void> close() {
-    //отмена подписки на стрим с событиями подсоединения
+    //отмена подписки репозитория на события
+    connectedRepository.cancelConnectedSubscription();
+    //отмена подписки на стрим с событиями подсоединения от репозитория
     subscription?.cancel();
     return super.close();
   }

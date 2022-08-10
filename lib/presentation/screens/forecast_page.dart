@@ -44,7 +44,7 @@ class _ForecastPageState extends State<ForecastPage> {
         ),
         title: Column(
           children: [
-            const Text(AppStrings.labelCity),
+            const Text(AppStrings.labelForecastFull),
             FittedBox(
               child: Text(
                 'Город $cityName',

@@ -9,12 +9,29 @@ class ConnectedRepoImpl implements ConnectedRepository {
   //объект подписки на сообщения потока
   late StreamSubscription? subscription;
 
-  //broadcast иначе ошибка при вызове listen после однократного получения состояния
-  final streamController = StreamController<bool>.broadcast();
+  //стрим для добавления событий о стостоянии подключения
+  final streamController = StreamController<bool>();
 
+  //конструктор с подпиской на события изменеия состояния подключения
   ConnectedRepoImpl({required this.connectivity}) : super() {
-    subscription =
+    //выполняется полученеие текущего состяния подключения
+    //если этого не сделать, первое событие в стриме появится только
+    //при смене состояния, то есть необходимо было бы выключить интернет и включить
+    //его снова для того чтобы появился стейт наличия соединения
+    getCurrentConnectionState();
+    //выполняется подписка на изменение состояния подключения
+    subscribeToStream();
+  }
+
+  //метод для подписки на стрим с данными о состоянии подключения
+  StreamSubscription<ConnectivityResult> subscribeToStream() {
+    return subscription =
         connectivity.onConnectivityChanged.listen(checkConnectivityResult);
+  }
+
+  //метод возвращающий текущее состояние подключения
+  Future<void> getCurrentConnectionState() async {
+    checkConnectivityResult(await connectivity.checkConnectivity());
   }
 
   //функция проверки результата для определения появилось соединение или нет
@@ -30,14 +47,15 @@ class ConnectedRepoImpl implements ConnectedRepository {
     }
   }
 
+  //метод возвращающий поток состояний подключения
   @override
   Stream<bool> getConnectedStream() {
     return streamController.stream;
   }
 
+  //метод для отмены подписки на поток данных о подключении
   @override
-  Future<bool> isConnected() async {
-    checkConnectivityResult(await connectivity.checkConnectivity());
-    return streamController.stream.first;
+  void cancelConnectedSubscription() {
+    subscription?.cancel();
   }
 }

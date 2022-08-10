@@ -15,6 +15,7 @@ void main() {
   setUp(() {
     //инициализируем мок connectivity
     mockConnectivity = MockConnectivity();
+    // если тестов несколько, этот блок перенести в test
     // //описываем какие состояния выдавать при обращении
     // when(() => mockConnectivity.onConnectivityChanged).thenAnswer((_) {
     //   return Stream<ConnectivityResult>.fromIterable(
@@ -28,16 +29,98 @@ void main() {
     // connectedRepository = ConnectedRepoImpl(connectivity: mockConnectivity);
   });
 
-  test('Should return [true, false] on [mobile,none]', () {
+  test('Should return [true] on [mobile] event (startup)', () {
+    //настройка ответа на текущее состояние
+    when(() => mockConnectivity.checkConnectivity()).thenAnswer(
+        (_) => Future<ConnectivityResult>.value(ConnectivityResult.mobile));
+    //настройка ответа на стрим
     when(() => mockConnectivity.onConnectivityChanged).thenAnswer((_) {
-      return Stream<ConnectivityResult>.fromIterable(
-          [ConnectivityResult.mobile, ConnectivityResult.none]);
+      return Stream<ConnectivityResult>.fromIterable([]);
     });
+    //инициализация репозитория
     connectedRepository = ConnectedRepoImpl(connectivity: mockConnectivity);
 
+    //получение данных от репозитория
     final Stream<bool> connectedStream =
         connectedRepository.getConnectedStream();
 
-    expect(connectedStream, emitsInOrder(<bool>[true, false]));
+    //проверка порядка полученных событий из стрима
+    expectLater(connectedStream, emitsInOrder(<bool>[true]));
+  });
+
+  test('Should return [false] on [none] event (startup)', () {
+    //настройка ответа на текущее состояние
+    when(() => mockConnectivity.checkConnectivity()).thenAnswer(
+        (_) => Future<ConnectivityResult>.value(ConnectivityResult.none));
+    //настройка ответа на стрим
+    when(() => mockConnectivity.onConnectivityChanged).thenAnswer((_) {
+      return Stream<ConnectivityResult>.fromIterable([]);
+    });
+    //инициализация репозитория
+    connectedRepository = ConnectedRepoImpl(connectivity: mockConnectivity);
+
+    //получение данных от репозитория
+    final Stream<bool> connectedStream =
+        connectedRepository.getConnectedStream();
+
+    //проверка порядка полученных событий из стрима
+    expectLater(connectedStream, emitsInOrder(<bool>[false]));
+  });
+
+  test('Should return [true, false] on [mobile,none] events', () {
+    //настройка ответа на текущее состояние
+    when(() => mockConnectivity.checkConnectivity()).thenAnswer(
+        (_) => Future<ConnectivityResult>.value(ConnectivityResult.mobile));
+    //настройка ответа на стрим
+    when(() => mockConnectivity.onConnectivityChanged).thenAnswer((_) {
+      return Stream<ConnectivityResult>.fromIterable([ConnectivityResult.none]);
+    });
+    //инициализация репозитория
+    connectedRepository = ConnectedRepoImpl(connectivity: mockConnectivity);
+
+    //получение данных от репозитория
+    final Stream<bool> connectedStream =
+        connectedRepository.getConnectedStream();
+
+    //проверка порядка полученных событий из стрима
+    expectLater(connectedStream, emitsInOrder(<bool>[true, false]));
+  });
+
+  test('Should return [true, false] on [wifi,none] events', () {
+    //настройка ответа на текущее состояние
+    when(() => mockConnectivity.checkConnectivity()).thenAnswer(
+        (_) => Future<ConnectivityResult>.value(ConnectivityResult.wifi));
+    //настройка ответа на стрим
+    when(() => mockConnectivity.onConnectivityChanged).thenAnswer((_) {
+      return Stream<ConnectivityResult>.fromIterable([ConnectivityResult.none]);
+    });
+    //инициализация репозитория
+    connectedRepository = ConnectedRepoImpl(connectivity: mockConnectivity);
+
+    //получение данных от репозитория
+    final Stream<bool> connectedStream =
+        connectedRepository.getConnectedStream();
+
+    //проверка порядка полученных событий из стрима
+    expectLater(connectedStream, emitsInOrder(<bool>[true, false]));
+  });
+
+  test('Should return [false, true] on [none,wifi] events', () {
+    //настройка ответа на текущее состояние
+    when(() => mockConnectivity.checkConnectivity()).thenAnswer(
+        (_) => Future<ConnectivityResult>.value(ConnectivityResult.none));
+    //настройка ответа на стрим
+    when(() => mockConnectivity.onConnectivityChanged).thenAnswer((_) {
+      return Stream<ConnectivityResult>.fromIterable([ConnectivityResult.wifi]);
+    });
+    //инициализация репозитория
+    connectedRepository = ConnectedRepoImpl(connectivity: mockConnectivity);
+
+    //получение данных от репозитория
+    final Stream<bool> connectedStream =
+        connectedRepository.getConnectedStream();
+
+    //проверка порядка полученных событий из стрима
+    expectLater(connectedStream, emitsInOrder(<bool>[false, true]));
   });
 }

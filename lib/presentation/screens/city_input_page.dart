@@ -67,7 +67,9 @@ class _CityInputTextFieldState extends State<CityInputTextField> {
     //проверка на пустое поле
     if (cityNameController.text != '') {
       //сохранение введенного города
-      context.read<AppSettingsCubit>().saveCity(cityNameController.text);
+      context
+          .read<AppSettingsCubit>()
+          .saveCity(cityNameController.text.trimLeft().trimRight());
       //проверка наличия интернет-соединения
       if (context.read<ConnectedBloc>().state is ConnectedSuccessState ||
           kIsWeb) {

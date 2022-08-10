@@ -4,7 +4,6 @@ abstract class ConnectedRepository {
 
   ///необходимо переопределить этот метод для получения потока с состояниями
   Stream<bool> getConnectedStream();
-
-  //необходимо переопределить этот метод для получения текущено состояния подсоеднения
-  Future<bool> isConnected();
+  //метод для отмены подписки на поток
+  void cancelConnectedSubscription();
 }
